@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -8,6 +9,7 @@ import 'package:google_docs_clone/app/utils.dart';
 import 'package:google_docs_clone/components/document/state/document_state.dart';
 import 'package:google_docs_clone/models/models.dart';
 import 'package:google_docs_clone/repositories/repositories.dart';
+import 'package:uuid/uuid.dart';
 
 final _documentProvider =
     StateNotifierProvider.family<DocumentController, DocumentState, String>(
@@ -18,6 +20,8 @@ final _documentProvider =
 );
 
 class DocumentController extends StateNotifier<DocumentState> {
+  final _deviceId = const Uuid().v4();
+
   /// Debounce [Timer] for automatic saving.
   Timer? _debounce;
 
@@ -26,7 +30,11 @@ class DocumentController extends StateNotifier<DocumentState> {
           DocumentState(id: documentId),
         ) {
     _setupDocument();
+    _setupListeners();
   }
+
+  late final StreamSubscription<dynamic>? documentListener;
+  late final StreamSubscription<dynamic>? realtimeListener;
 
   static StateNotifierProviderFamily<DocumentController, DocumentState, String>
       get provider => _documentProvider;
@@ -63,9 +71,49 @@ class DocumentController extends StateNotifier<DocumentState> {
       );
 
       state.quillController?.addListener(_quillControllerUpdate);
+
+      documentListener = state.quillDocument?.changes.listen((event) {
+        final delta = event.item2;
+        final source = event.item3;
+
+        if (source != ChangeSource.LOCAL) {
+          return;
+        }
+        _broadcastDeltaUpdate(delta);
+      });
     } on RepositoryException catch (e) {
       state = state.copyWith(error: AppError(message: e.message));
     }
+  }
+
+  Future<void> _setupListeners() async {
+    final subscription =
+        _read(Repository.database).subscribeToPage(pageId: state.id);
+    realtimeListener = subscription.stream.listen(
+      (event) {
+        final dId = event.payload['deviceId'];
+        if (_deviceId != dId) {
+          final delta = Delta.fromJson(jsonDecode(event.payload['delta']));
+          state.quillController?.compose(
+            delta,
+            state.quillController?.selection ??
+                const TextSelection.collapsed(offset: 0),
+            ChangeSource.REMOTE,
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> _broadcastDeltaUpdate(Delta delta) async {
+    _read(Repository.database).updateDelta(
+      pageId: state.id,
+      deltaData: DeltaData(
+        user: _read(AppState.auth).user!.$id,
+        delta: jsonEncode(delta.toJson()),
+        deviceId: _deviceId,
+      ),
+    );
   }
 
   void _quillControllerUpdate() {
@@ -118,6 +166,8 @@ class DocumentController extends StateNotifier<DocumentState> {
 
   @override
   void dispose() {
+    documentListener?.cancel();
+    realtimeListener?.cancel();
     state.quillController?.removeListener(_quillControllerUpdate);
     super.dispose();
   }
