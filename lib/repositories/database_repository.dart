@@ -70,6 +70,20 @@ class DatabaseRepository with RepositoryExceptionMixin {
     return DocumentPageData.fromMap(doc.data);
   }
 
+  Future<List<DocumentPageData>> getAllPages(String userId) async {
+    return exceptionHandler(_getAllPages(userId));
+  }
+
+  Future<List<DocumentPageData>> _getAllPages(String userId) async {
+    final result = await _database.listDocuments(
+      collectionId: CollectionNames.pages,
+      queries: [Query.equal('owner', userId)],
+    );
+    return result.documents.map((element) {
+      return DocumentPageData.fromMap(element.data);
+    }).toList();
+  }
+
   Future<void> updatePage(
       {required String documentId,
       required DocumentPageData documentPage}) async {

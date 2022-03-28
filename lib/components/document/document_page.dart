@@ -34,6 +34,21 @@ class DocumentPage extends ConsumerWidget {
             newDocumentPressed: () {
               Routemaster.of(context).push(AppRoutes.newDocument);
             },
+            openDocumentsPressed: () {
+              Future.delayed(const Duration(seconds: 0), () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: ConstrainedBox(
+                          constraints:
+                              BoxConstraints.loose(const Size(1400, 700)),
+                          child: const AllDocumentsPopup(),
+                        ),
+                      );
+                    });
+              });
+            },
           ),
           _Toolbar(documentId: documentId),
           Expanded(
