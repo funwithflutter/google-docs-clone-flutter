@@ -13,6 +13,8 @@ abstract class Dependency {
 
 abstract class Repository {
   static Provider<AuthRepository> get auth => AuthRepository.provider;
+  static Provider<DatabaseRepository> get database =>
+      DatabaseRepository.provider;
 }
 
 abstract class AppState {
