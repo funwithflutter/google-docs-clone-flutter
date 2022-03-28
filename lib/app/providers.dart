@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/app/constants.dart';
+import 'package:google_docs_clone/app/state/state.dart';
 import 'package:google_docs_clone/repositories/repositories.dart';
 
 abstract class Dependency {
@@ -12,6 +13,11 @@ abstract class Dependency {
 
 abstract class Repository {
   static Provider<AuthRepository> get auth => AuthRepository.provider;
+}
+
+abstract class AppState {
+  static StateNotifierProvider<AuthService, AuthState> get auth =>
+      AuthService.provider;
 }
 
 final _clientProvider = Provider<Client>(
