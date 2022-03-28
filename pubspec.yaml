@@ -37,6 +37,7 @@ dependencies:
   logging: ^1.0.2
   flutter_riverpod: ^1.0.3
   routemaster: ^0.9.5
+  appwrite: ^4.0.1
 
 dev_dependencies:
   flutter_test:
