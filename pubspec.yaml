@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   logging: ^1.0.2
   flutter_riverpod: ^1.0.3
+  routemaster: ^0.9.5
 
 dev_dependencies:
   flutter_test:
