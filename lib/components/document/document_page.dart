@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/app/app.dart';
 import 'package:google_docs_clone/app/navigation/routes.dart';
@@ -29,6 +29,8 @@ class DocumentPage extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           MenuBar(
+            leading: [_TitleTextEditor(documentId: documentId)],
+            trailing: [_IsSavedWidget(documentId: documentId)],
             newDocumentPressed: () {
               Routemaster.of(context).push(AppRoutes.newDocument);
             },
@@ -40,6 +42,89 @@ class DocumentPage extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+final _documentTitleProvider = Provider.family<String?, String>((ref, id) {
+  return ref.watch(DocumentController.provider(id)).documentPageData?.title;
+});
+
+class _TitleTextEditor extends ConsumerStatefulWidget {
+  const _TitleTextEditor({
+    Key? key,
+    required this.documentId,
+  }) : super(key: key);
+  final String documentId;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      __TitleTextEditorState();
+}
+
+class __TitleTextEditorState extends ConsumerState<_TitleTextEditor> {
+  final TextEditingController _textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen<String?>(
+      _documentTitleProvider(widget.documentId),
+      (String? previousValue, String? newValue) {
+        if (newValue != _textEditingController.text) {
+          _textEditingController.text = newValue ?? '';
+        }
+      },
+    );
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: IntrinsicWidth(
+        child: TextField(
+          controller: _textEditingController,
+          onChanged:
+              ref.read(DocumentController.notifier(widget.documentId)).setTitle,
+          decoration: const InputDecoration(
+            hintText: 'Untitled document',
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent, width: 3),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue, width: 3),
+            ),
+          ),
+          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
+        ),
+      ),
+    );
+  }
+}
+
+final _isSavedRemotelyProvider = Provider.family<bool, String>((ref, id) {
+  return ref.watch(DocumentController.provider(id)).isSavedRemotely;
+});
+
+class _IsSavedWidget extends ConsumerWidget {
+  const _IsSavedWidget({Key? key, required this.documentId}) : super(key: key);
+
+  final String documentId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var isSaved = ref.watch(_isSavedRemotelyProvider(documentId));
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        'Saved',
+        style: TextStyle(
+          fontSize: 18,
+          color: isSaved ? AppColors.secondary : Colors.grey,
+        ),
       ),
     );
   }

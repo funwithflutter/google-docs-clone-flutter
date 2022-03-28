@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/app/constants.dart';
 import 'package:google_docs_clone/app/providers.dart';
+import 'package:google_docs_clone/models/models.dart';
 import 'package:google_docs_clone/repositories/repository_exception.dart';
 
 final _databaseRepositoryProvider = Provider<DatabaseRepository>((ref) {
@@ -50,5 +51,31 @@ class DatabaseRepository with RepositoryExceptionMixin {
         },
       ),
     ]);
+  }
+
+  Future<DocumentPageData> getPage({
+    required String documentId,
+  }) {
+    return exceptionHandler(_getPage(documentId));
+  }
+
+  Future<DocumentPageData> _getPage(String documentId) async {
+    final doc = await _database.getDocument(
+      collectionId: CollectionNames.pages,
+      documentId: documentId,
+    );
+    return DocumentPageData.fromMap(doc.data);
+  }
+
+  Future<void> updatePage(
+      {required String documentId,
+      required DocumentPageData documentPage}) async {
+    return exceptionHandler(
+      _database.updateDocument(
+        collectionId: CollectionNames.pages,
+        documentId: documentId,
+        data: documentPage.toMap(),
+      ),
+    );
   }
 }
