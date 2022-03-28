@@ -11,5 +11,5 @@ class AppError extends Equatable {
   late final int timestamp;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, timestamp];
 }
