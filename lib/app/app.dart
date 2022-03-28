@@ -38,3 +38,7 @@ class _GoogleDocsAppState extends ConsumerState<GoogleDocsApp> {
     );
   }
 }
+
+abstract class AppColors {
+  static const secondary = Color(0xFF216BDD);
+}
