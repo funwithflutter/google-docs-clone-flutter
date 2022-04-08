@@ -3,6 +3,7 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_docs_clone/app/app.dart';
 import 'package:google_docs_clone/app/navigation/routes.dart';
+import 'package:google_docs_clone/app/providers.dart';
 import 'package:google_docs_clone/components/document/state/document_controller.dart';
 import 'package:google_docs_clone/components/document/widgets/widgets.dart';
 import 'package:routemaster/routemaster.dart';
@@ -33,6 +34,9 @@ class DocumentPage extends ConsumerWidget {
             trailing: [_IsSavedWidget(documentId: documentId)],
             newDocumentPressed: () {
               Routemaster.of(context).push(AppRoutes.newDocument);
+            },
+            signOutPressed: () {
+              ref.read(AppState.auth.notifier).signOut();
             },
             openDocumentsPressed: () {
               Future.delayed(const Duration(seconds: 0), () {
