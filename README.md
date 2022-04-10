@@ -1,4 +1,4 @@
-<h1 align="center">Google-Docs Like Clone With Flutter and Appwrite</h1>
+<h1 align="center">Google-Docs Like Clone With Flutter Web and Appwrite</h1>
 
 <p align="center">  
 This project is a demo application showing how to create a rich text editing experience, similar to Google Docs, using <a href="https://flutter.dev/">Flutter</a>, <a href="https://appwrite.io/">Appwrite</a>, and <a href="https://pub.dev/packages/flutter_quill">Flutter-Quill</a>. This is meant to serve as a demo on how to use these tools. Please see the video tutorial for a step-by-step walkthrough. Beginner friendly 😎
