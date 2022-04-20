@@ -1,7 +1,7 @@
 <h1 align="center">Google-Docs Like Clone With Flutter Web and Appwrite</h1>
 
 <p align="center">  
-This project is a demo application showing how to create a rich text editing experience, similar to Google Docs, using <a href="https://flutter.dev/">Flutter</a>, <a href="https://appwrite.io/">Appwrite</a>, and <a href="https://pub.dev/packages/flutter_quill">Flutter-Quill</a>. This is meant to serve as a demo on how to use these tools. Please see the video tutorial for a step-by-step walkthrough. Beginner friendly 😎
+This project is a demo application showing how to create a rich text editing experience, similar to Google Docs, using <a href="https://flutter.dev/">Flutter</a>, <a href="https://appwrite.io/?utm_source=influencer&utm_medium=homepage&utm_campaign=funwithflutter">Appwrite</a>, and <a href="https://pub.dev/packages/flutter_quill">Flutter-Quill</a>. This is meant to serve as a demo on how to use these tools. Please see the video tutorial for a step-by-step walkthrough. Beginner friendly 😎
 </br>
 
 ### Realtime Changes - Collaboration
@@ -32,7 +32,11 @@ Packages used in this project.
 <img alt="built with appwrite logo"  src="https://user-images.githubusercontent.com/13705472/162620390-34dbbcab-b9c2-44b9-966e-adf6d7a63933.svg" align="right" width="32%"/>
 
 ### Backend: Appwrite
-[Appwrite](https://appwrite.io/) is an open-source alternative to Firebase and makes it possible to easily integrate authentication and add a backend database for your application. Appwrite also makes it possible to add real-time listeners to your database quickly.
+[Appwrite](https://appwrite.io/?utm_source=influencer&utm_medium=homepage&utm_campaign=funwithflutter) is an open-source alternative to Firebase and makes it possible to easily integrate authentication and add a backend database for your application. Appwrite also makes it possible to add real-time listeners to your database quickly.
+
+- [Appwrite Docs](https://appwrite.io/docs?utm_source=influencer&utm_medium=docs&utm_campaign=funwithflutter)
+- [Appwrite Github](https://github.com/appwrite/?utm_source=influencer&utm_medium=github&utm_campaign=funwithflutter)
+- [Appwrite Discord](https://discord.com/invite/GSeTUeA?utm_source=influencer&utm_medium=discord&utm_campaign=funwithflutter)
 
 > Appwrite sponsored this project and tutorial
 
