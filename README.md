@@ -66,7 +66,7 @@ For a complete step-by-step guide, see: https://youtu.be/0_GJ1w_iG44
 For the most up-to-date code: see the [master branch](https://github.com/funwithflutter/google-docs-clone-flutter/tree/master).
 
 The tutorial sections are extracted as dedicated branches on Github, meaning you can easily follow along and always have the latest code before starting new sections.
-0 Intro: [video](https://www.youtube.com/watch?v=0_GJ1w_iG44&t=0s)
+0. Intro: [video](https://www.youtube.com/watch?v=0_GJ1w_iG44&t=0s)
 1. Base: [branch](https://github.com/funwithflutter/google-docs-clone-flutter/tree/01-base) and [video](https://www.youtube.com/watch?v=0_GJ1w_iG44&t=239s)
 2. Setup Riverpod: [branch](https://github.com/funwithflutter/google-docs-clone-flutter/tree/02-setup_riverpod) and [video](https://www.youtube.com/watch?v=0_GJ1w_iG44&t=308s)
 3. Setup Routemaster: [branch](https://github.com/funwithflutter/google-docs-clone-flutter/tree/03-setup_routemaster) and [video](https://www.youtube.com/watch?v=0_GJ1w_iG44&t=398s)
