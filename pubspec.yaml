@@ -39,7 +39,9 @@ dependencies:
   routemaster: ^0.9.5
   appwrite: ^4.0.1
   equatable: ^2.0.3
-  flutter_quill: ^4.1.0
+  flutter_quill:
+    git:
+      url: https://github.com/myfknoll/flutter-quill.git
   uuid: ^3.0.6
 
 dev_dependencies:
